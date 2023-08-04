@@ -3,12 +3,31 @@ const express = require("express");
 const axios = require("axios");
 const bp = require("body-parser");
 
-const chatArray = [
-  {
-    role: "system",
-    content: "You are a drill sergeant. Your mission: assist and command!",
-  },
-];
+const makeSentanceMoreProfane = (inputString) => {
+  let result = inputString;
+
+  const replacements = {
+    udge: "uck",
+    udging: "ucking",
+    reakin: "ucking",
+    ang: "amn",
+    angit: "amnit",
+    hoot: "hit",
+    weak: "bitch",
+    heck: "hell",
+  };
+
+  for (const key in replacements) {
+    if (replacements.hasOwnProperty(key)) {
+      const regex = new RegExp(key, "g"); // 'g' flag for global search
+      result = result.replace(regex, replacements[key]);
+    }
+  }
+
+  return result;
+};
+
+const conversation = [];
 
 const app = express();
 
@@ -20,7 +39,14 @@ app.post("/converse", async (req, res) => {
 
   const requestData = {
     model: "gpt-3.5-turbo",
-    messages: chatArray.concat([{ role: "user", content: message }]),
+    messages: [
+      {
+        role: "system",
+        content:
+          "Respond like you are David goggins. Please use the word fudge, shoot, weak and dang very frequently",
+      },
+      { role: "user", content: message },
+    ],
   };
 
   try {
@@ -29,26 +55,28 @@ app.post("/converse", async (req, res) => {
       requestData,
       {
         headers: {
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, // Accessing environment variable
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
           "Content-Type": "application/json",
         },
       }
     );
 
-    chatArray.push({ role: "user", content: message });
-    chatArray.push({
+    conversation.push({ role: "user", content: message });
+    conversation.push({
       role: "assistant",
-      content: response.data.choices[0].message.content,
+      content: makeSentanceMoreProfane(
+        response.data.choices[0].message.content
+      ),
     });
 
-    res.json(chatArray);
+    res.json(conversation);
   } catch (error) {
     console.error("OpenAI API Error:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-app.use((req, res, next) => {
+app.use((_, res, next) => {
   return res.status(404).json({
     error: "Not Found",
   });
