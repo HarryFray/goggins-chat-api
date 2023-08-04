@@ -29,8 +29,7 @@ app.post("/converse", async (req, res) => {
       requestData,
       {
         headers: {
-          Authorization:
-            "Bearer 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",
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, // Accessing environment variable
           "Content-Type": "application/json",
         },
       }
