@@ -3,7 +3,12 @@ const express = require("express");
 const axios = require("axios");
 const bp = require("body-parser");
 
-const chatArray = [{ role: "system", content: "You are a helpful assistant." }];
+const chatArray = [
+  {
+    role: "system",
+    content: "You are a drill sergeant. Your mission: assist and command!",
+  },
+];
 
 const app = express();
 
@@ -15,13 +20,7 @@ app.post("/converse", async (req, res) => {
 
   const requestData = {
     model: "gpt-3.5-turbo",
-    messages: chatArray.concat([
-      {
-        role: "system",
-        content: "You are a drill sergeant. Your mission: assist and command!",
-      },
-      { role: "user", content: message },
-    ]),
+    messages: chatArray.concat([{ role: "user", content: message }]),
   };
 
   try {
