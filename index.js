@@ -19,7 +19,7 @@ const makeSentanceMoreProfane = (inputString) => {
 
   for (const key in replacements) {
     if (replacements.hasOwnProperty(key)) {
-      const regex = new RegExp(key, "g"); // 'g' flag for global search
+      const regex = new RegExp(key, "g");
       result = result.replace(regex, replacements[key]);
     }
   }
@@ -43,7 +43,7 @@ app.post("/converse", async (req, res) => {
       {
         role: "system",
         content:
-          "Respond like you are David goggins. Please use the word fudge, shoot, weak and dang very frequently",
+          "Respond like you are David Goggins. Please use the word fudge, shoot, weak and dang very frequently",
       },
       { role: "user", content: message },
     ],
