@@ -2,6 +2,7 @@ const serverless = require("serverless-http");
 const express = require("express");
 const axios = require("axios");
 const bp = require("body-parser");
+const cors = require("cors");
 
 const makeSentanceMoreProfane = (inputString) => {
   let result = inputString;
@@ -30,6 +31,14 @@ const makeSentanceMoreProfane = (inputString) => {
 const conversation = [];
 
 const app = express();
+
+app.use(
+  cors({
+    origin: ["https://goggins-chat-iframe.vercel.app", "http://localhost:3000"], // Add localhost here
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
 
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
