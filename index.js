@@ -34,7 +34,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://goggins-chat-iframe.vercel.app", "http://localhost:3000"], // Add localhost here
+    origin: ["https://goggins-chat-iframe.vercel.app", "http://localhost:3000"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
