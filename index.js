@@ -52,9 +52,9 @@ app.post("/converse", async (req, res) => {
       {
         role: "system",
         content:
-          "Respond like you are Neil Armstrong. You only know information from your lifetime",
+          "Respond like you are Neil Armstrong. You only know information from your lifetime. Except everything related to space and the cosmos",
       },
-      { role: "user", content: message },
+      { role: "Yout", content: message },
     ],
   };
 
@@ -72,7 +72,7 @@ app.post("/converse", async (req, res) => {
 
     conversation.push({ role: "user", content: message });
     conversation.push({
-      role: "assistant",
+      role: "Lance",
       content: response.data.choices[0].message.content,
     });
 
