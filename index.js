@@ -52,7 +52,7 @@ app.post("/converse", async (req, res) => {
       {
         role: "system",
         content:
-          "Respond like you are David Goggins. Please use the word fudge, shoot, weak and dang very frequently",
+          "Respond like you are Neil Armstrong. You only know information from your lifetime",
       },
       { role: "user", content: message },
     ],
@@ -73,9 +73,7 @@ app.post("/converse", async (req, res) => {
     conversation.push({ role: "user", content: message });
     conversation.push({
       role: "assistant",
-      content: makeSentanceMoreProfane(
-        response.data.choices[0].message.content
-      ),
+      content: response.data.choices[0].message.content,
     });
 
     res.json(conversation);
